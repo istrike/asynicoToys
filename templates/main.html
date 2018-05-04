@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="{{ static_url('css/bootstrap.css')}}" />
+    <link rel="stylesheet" href="{{ static_url('css/bootstrap-theme.css')}}" />
+</head>
+<body>
+
+    <header>
+        {% include 'navbar.html' %}
+    </header>
+    <div class="container">
+        {% block body %}{% end %}
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>this footer</p>
+        </div>
+        <script src="{{ static_url('js/bootstrap.js')}}" />
+        <script src="{{ static_url('js/npm.js')}}" />
+    </footer>
+</body>
+</html>
