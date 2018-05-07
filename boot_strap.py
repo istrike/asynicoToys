@@ -5,15 +5,24 @@ import tornado.escape
 from tornado.options import define, options
 from config import settings
 from handlers import IndexHandler
+from handlers import PageNotFound
+import motor
 
 # 定义一个默认的端口
+
+
 define("port", default=8000, help="run port ", type=int)
 
 
 class Application(tornado.web.Application):
     def __init__(self):
-        handlers = [(r"/", IndexHandler.IndexHandler), ]
-        tornado.web.Application.__init__(self, handlers, **settings)
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')["mydb"]
+        settings["mongo"]=client
+        handler_list = [
+            (r"/", IndexHandler.IndexHandler),
+            (r'.*', PageNotFound.PageNotFound),
+        ]
+        tornado.web.Application.__init__(self, handler_list, **settings)
 
 
 if __name__ == "__main__":
